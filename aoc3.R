@@ -103,7 +103,8 @@ get_manhattan_dist <- function(xy){
   return(sum(abs(xy)))
 }
 
-# 4. Actual question
+# Actual question
+# Part A.
 input <- read.csv("aoc3.txt", header = F)
 paths <- get_path(input)
 A <- get_lines(xs = paths$A$xs, ys = paths$A$ys)
@@ -117,6 +118,15 @@ manh_distances <- manh_distances[which(manh_distances != 0)]
 # get closest intersection
 closest_crossing <- min(manh_distances)
 print(closest_crossing)
+# Part B.
+# get intersection with least number of moves
+crossings.df <- as.data.frame(crossings)
+crossings.df <-  crossings.df[,-which(colSums(crossings.df) == 0)]
+print(crossings.df[,which(crossings.df[3,] == min(crossings.df[3,]))])
+
+
+
+
 
 
 ################################################
@@ -165,7 +175,10 @@ manh_distances <- manh_distances[which(manh_distances != 0)]
 closest_crossing <- min(manh_distances)
 print(closest_crossing)
 #6, 159, 135
-
+# get intersection with least number of moves
+crossings.df <- as.data.frame(crossings)
+crossings.df <-  crossings.df[,-which(colSums(crossings.df) == 0)]
+print(crossings.df[,which(crossings.df[3,] == min(crossings.df[3,]))])
 
 # p and q are points defined by matrix (x1, y1)
 #                                      (x2, y2)
