@@ -73,4 +73,7 @@ for(trajectory in trajectories){
   i <- i+1
 }
 print(sums)
+#90 278  88  98  45
+
 prod(sums)
+# 9709761600
