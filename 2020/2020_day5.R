@@ -75,9 +75,18 @@ expected_out <- c(567, 119, 820)
 ### PART 1
 input <- readLines("2020_day5_input.txt")
 seatIDs <- vector(mode = "integer", length = length(input))
+seatCoords <- vector(mode = "list", length = length(input))
 for(i in 1:length(input)){
   boarding_nr <- input[i]
-  seatID <- getSeatID(getSeatCoords(boarding_nr, row_nrs, col_nrs))
+  seatCoord <- getSeatCoords(boarding_nr, row_nrs, col_nrs)
+  seatCoords[[i]] <- seatCoord
+  seatID <- getSeatID(seatCoord)
   seatIDs[i] <- seatID
 }
+max(seatIDs)
 # 861
+
+### PART 2
+all_seats <- min(seatIDs):max(seatIDs)
+all_seats[which(!(all_seats %in% seatIDs))]
+#633
