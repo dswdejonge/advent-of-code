@@ -69,4 +69,15 @@ test_that("the right seat ID is generated",{
   expect_equal(getSeatID(getSeatCoords("BBFFBBFRLL", row_nrs, col_nrs)), 820)
 })
 
+input <- c("BFFFBBFRRR", "FFFBBBFRRR", "BBFFBBFRLL")
+expected_out <- c(567, 119, 820)
+
 ### PART 1
+input <- readLines("2020_day5_input.txt")
+seatIDs <- vector(mode = "integer", length = length(input))
+for(i in 1:length(input)){
+  boarding_nr <- input[i]
+  seatID <- getSeatID(getSeatCoords(boarding_nr, row_nrs, col_nrs))
+  seatIDs[i] <- seatID
+}
+# 861
