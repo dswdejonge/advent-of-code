@@ -1,5 +1,6 @@
 library(testthat)
 library(dplyr)
+library(stringr)
 
 ### FUNCTIONS
 inputToData <- function(input){
@@ -10,41 +11,57 @@ inputToData <- function(input){
       names(my_list)[list_index] <- paste0("item",list_index)
       list_index <- list_index+1
     }else{
-      #answers <- unlist(strsplit(,""))
-      my_list$temp <- 
-        c(my_list$temp, input[i])
+      my_list$temp <- c(my_list$temp, input[i])
     }
   }
   names(my_list)[list_index] <- paste0("item",list_index)
   return(my_list)
 }
 
-findUniqueAnswers <- function(input, who = c("anyone", "everyone")){
+findAnswers <- function(input, who = c("anyone", "everyone")){
+  getAllLetters <- function(answers_vector){
+    all <- unique(unlist(strsplit(answers_vector, "")))
+    return(all)
+  }
+  getCommonLetters <- function(answers_vec){
+    letter_vec <- getAllLetters(answers_vec)
+    x <- sapply(answers_vec, str_detect, pattern = letter_vec)
+    are_common <- vector(mode = "logical", length = length(letter_vec))
+    for(i in 1:length(are_common)){
+      if(is.null(nrow(x))){
+        are_common[i] <- all(x)
+      }else{
+        are_common[i] <- all(x[i,]) 
+      }
+    }
+    return(letter_vec[are_common])
+  }
+  
   my_list <- inputToData(input)
   if(who == "anyone"){
-    unique_answers <- sapply(my_list, strsplit, split = "") %>%
-      sapply(., unlist) %>%
-      sapply(., unique)
+    all_letters <- sapply(my_list, getAllLetters)
+    return(all_letters)
   }else if(who == "everyone"){
-    
+    common_letters <- sapply(my_list, getCommonLetters)
+    return(common_letters)
   }
-  return(unique_answers)
 }
 
-countUniqueAnswers <- function(unique_answers){
-  unique_answer_count <- sapply(unique_answers, length)
-  return(unique_answer_count)
+countAnswers <- function(all_letters){
+  my_count <- sapply(all_letters, length)
+  return(my_count)
 }
 
 ### TESTS
 input <- readLines("2020_day6_input_test.txt")
 test_that("the correct number of unique answers are found", {
-  expect_equal(sum(countUniqueAnswers(findUniqueAnswers(input, "anyone"))),11)
+  expect_equal(sum(countAnswers(findAnswers(input, "anyone"))),11)
+  expect_equal(sum(countAnswers(findAnswers(input, "everyone"))),6)
 })
 
 ### PART 1
 input <- readLines("2020_day6_input.txt")
-sum(countUniqueAnswers(findUniqueAnswers(input, "anyone")))
+sum(countAnswers(findAnswers(input, "anyone")))
 # 7128
-
 ### PART 2
+sum(countAnswers(findAnswers(input, "everyone")))
