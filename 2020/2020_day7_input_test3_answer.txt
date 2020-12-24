@@ -1,0 +1,24 @@
+in sg: 2 dr + 2 do 				(4) 
+ in dr: 0 others 					
+ in do: 4 dy + 2 dg 			(6)
+  in dy: 8 dg + 8 db			(16)
+   in dg: 16 db					(16)
+   	in db: 32 dv				(32)
+   	 in dv: 0 others
+   in db: 16 dv					(16)
+    in dv: 0 others
+  in dg: 4 db					(4)
+   in db: 8 dv					(8)
+    in dv: 0 others
+   
+   
+    
+     
+   
+    
+  
+   
+
+c(4, 6, 16, 16, 32, 16, 4, 8)
+
+
